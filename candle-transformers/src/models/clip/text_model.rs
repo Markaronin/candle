@@ -15,12 +15,14 @@ use super::EncoderConfig;
 #[derive(Debug, Clone, Copy)]
 pub enum Activation {
     QuickGelu,
+    Gelu,
 }
 
 impl Module for Activation {
     fn forward(&self, xs: &Tensor) -> Result<Tensor> {
         match self {
             Activation::QuickGelu => xs * nn::ops::sigmoid(&(xs * 1.702f64)?)?,
+            Activation::Gelu => xs.gelu_erf(),
         }
     }
 }
