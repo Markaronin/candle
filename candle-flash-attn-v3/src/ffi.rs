@@ -10,13 +10,14 @@
 use core::ffi::{c_int, c_void};
 
 extern "C" {
-    pub(crate) fn run_mha(
+    pub(crate) fn run_mha_v3(
         q_ptr: *const c_void,
         k_ptr: *const c_void,
         v_ptr: *const c_void,
         o_ptr: *const c_void,
         softmax_lse_ptr: *const c_void,
         alibi_slopes_ptr: *const c_void,
+        tile_count_semaphore_ptr: *const i32,
 
         cu_seqlens_q_ptr: *const i32,
         cu_seqlens_k_ptr: *const i32,
@@ -59,6 +60,8 @@ extern "C" {
 
         total_q: u32,
         total_k: u32,
+
+        stream_ptr: *mut c_void,
     );
 
 }
